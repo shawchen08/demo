@@ -1,0 +1,59 @@
+//clearfix
+@mixin clearfix {
+    &:before, &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+//grid
+@mixin make-row($gutter: $grid-gutter-width) {
+    margin: ceil(($gutter / -2));
+    @include clearfix;
+}
+@mixin make-grid-columns($class, $i: 1, $list: ".col-#{$class}-#{$i}") {
+    @for $i from (1 + 1) through $grid-columns {
+        $list: "#{$list}, .col-#{$class}-#{$i}";
+    }
+    #{$list} {
+        position: relative;
+        min-height: 1px;
+        width: 100%;
+        padding: ceil(($grid-gutter-width / 2));
+    }
+}
+@mixin float-grid-columns($class, $i: 1, $list: ".col-#{$class}-#{$i}") {
+    @for $i from (1 + 1) through $grid-columns {
+        $list: "#{$list}, .col-#{$class}-#{$i}";
+    }
+    #{$list} {
+        float: left;
+    }
+}
+@mixin calc-grid-column($index, $class) {
+    .col-#{$class}-#{$index} {
+        width: percentage($index / $grid-columns);
+    }
+}
+@mixin make-grid($class) {
+    @include float-grid-columns($class);
+    @include make-grid-columns($class);
+    @media (min-width: $grid-breakpoint) {
+        @for $i from 1 through $grid-columns {
+            @include calc-grid-column($i, $class);
+        }
+    }
+}
+@mixin calc-column-height($i: 1) {
+    .col-h-#{$i} {
+        height: $i * $grid-height;
+    }
+    @for $i from (1 + 1) through $grid-columns {
+        .col-h-#{$i} {
+            height: $i * $grid-height + $grid-gutter-width;
+        }
+    }
+}
