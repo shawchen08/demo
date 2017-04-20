@@ -1,6 +1,7 @@
 var demoPath = [
     // './demos/demo1',
-    './demos/Carousel'
+    // './demos/Carousel',
+    './demos/canvas-test'
 ];
 
 var gulp = require('gulp'),
