@@ -67,3 +67,6 @@ var zoom = function(event) {
 };
 
 demo.addEventListener('mousemove', zoom);
+demo.addEventListener('mouseout', function () {
+    zoomctx.clearRect(0, 0, 300, 300);
+});
